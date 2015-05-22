@@ -1,0 +1,3 @@
+[submodule "Submodules/iD"]
+	path = Submodules/iD
+	url = git@github.com:openstreetmap/iD.git

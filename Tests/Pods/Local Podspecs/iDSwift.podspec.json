@@ -1,0 +1,15 @@
+{
+  "name": "iDSwift",
+  "source": {
+    "git": "",
+    "tag": "",
+    "submodules": true
+  },
+  "default_subspecs": "iDSwift",
+  "subspecs": [
+    {
+      "name": "iDSwift",
+      "source_files": "iDSwift/*.swift"
+    }
+  ]
+}

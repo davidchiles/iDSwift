@@ -1,0 +1,6 @@
+source 'https://github.com/CocoaPods/Specs.git'
+
+target :iDSwiftTests do
+    platform :ios, '7.0'
+    pod 'iDSwift', :path => '../iDSwift.podspec'
+end
