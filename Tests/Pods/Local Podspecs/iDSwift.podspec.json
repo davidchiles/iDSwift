@@ -1,15 +1,36 @@
 {
   "name": "iDSwift",
+  "version": "0.0.1",
+  "summary": "A Swift way of using OpenStreetMap iD editor presets.",
+  "description": "                   A Swift way of using OpenStreetMap iD editor presets.\n\n",
+  "homepage": "https://github.com/davidchiles/iDSwift.git",
+  "license": "CC0",
+  "authors": {
+    "David Chiles": "dwalterc@gmail.com"
+  },
+  "social_media_url": "http://twitter.com/dchiles",
+  "platforms": {
+    "ios": "8.0"
+  },
   "source": {
-    "git": "",
-    "tag": "",
+    "git": "https://github.com/davidchiles/iDSwift.git",
     "submodules": true
   },
-  "default_subspecs": "iDSwift",
+  "default_subspecs": [
+    "standard",
+    "iD"
+  ],
   "subspecs": [
     {
-      "name": "iDSwift",
-      "source_files": "iDSwift/*.swift"
+      "name": "standard",
+      "source_files": [
+        "Classes",
+        "iDSwift/*.swift"
+      ]
+    },
+    {
+      "name": "iD",
+      "resources": "Submodules/iD/data/presets/*.json"
     }
   ]
 }

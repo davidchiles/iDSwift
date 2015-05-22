@@ -1,0 +1,18 @@
+PODS:
+  - iDSwift (0.0.1):
+    - iDSwift/iD (= 0.0.1)
+    - iDSwift/standard (= 0.0.1)
+  - iDSwift/iD (0.0.1)
+  - iDSwift/standard (0.0.1)
+
+DEPENDENCIES:
+  - iDSwift (from `../iDSwift.podspec`)
+
+EXTERNAL SOURCES:
+  iDSwift:
+    :path: "../iDSwift.podspec"
+
+SPEC CHECKSUMS:
+  iDSwift: 230f2aee14a40d4b9112a8c99ac5a47c17df445c
+
+COCOAPODS: 0.37.1
