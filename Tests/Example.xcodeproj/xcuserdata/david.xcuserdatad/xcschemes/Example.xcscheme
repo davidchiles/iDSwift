@@ -14,10 +14,10 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "6346F3DC1B0FD302008DD617"
-               BuildableName = "iDSwift.app"
-               BlueprintName = "iDSwift"
-               ReferencedContainer = "container:iDSwift.xcodeproj">
+               BlueprintIdentifier = "6346F40C1B0FF31F008DD617"
+               BuildableName = "Example.app"
+               BlueprintName = "Example"
+               ReferencedContainer = "container:Example.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
          <BuildActionEntry
@@ -28,10 +28,10 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "6346F3F11B0FD302008DD617"
-               BuildableName = "iDSwiftTests.xctest"
-               BlueprintName = "iDSwiftTests"
-               ReferencedContainer = "container:iDSwift.xcodeproj">
+               BlueprintIdentifier = "6346F4211B0FF31F008DD617"
+               BuildableName = "ExampleTests.xctest"
+               BlueprintName = "ExampleTests"
+               ReferencedContainer = "container:Example.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -46,20 +46,20 @@
             skipped = "NO">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "6346F3F11B0FD302008DD617"
-               BuildableName = "iDSwiftTests.xctest"
-               BlueprintName = "iDSwiftTests"
-               ReferencedContainer = "container:iDSwift.xcodeproj">
+               BlueprintIdentifier = "6346F4211B0FF31F008DD617"
+               BuildableName = "ExampleTests.xctest"
+               BlueprintName = "ExampleTests"
+               ReferencedContainer = "container:Example.xcodeproj">
             </BuildableReference>
          </TestableReference>
       </Testables>
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "6346F3DC1B0FD302008DD617"
-            BuildableName = "iDSwift.app"
-            BlueprintName = "iDSwift"
-            ReferencedContainer = "container:iDSwift.xcodeproj">
+            BlueprintIdentifier = "6346F40C1B0FF31F008DD617"
+            BuildableName = "Example.app"
+            BlueprintName = "Example"
+            ReferencedContainer = "container:Example.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
    </TestAction>
@@ -76,10 +76,10 @@
          runnableDebuggingMode = "0">
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "6346F3DC1B0FD302008DD617"
-            BuildableName = "iDSwift.app"
-            BlueprintName = "iDSwift"
-            ReferencedContainer = "container:iDSwift.xcodeproj">
+            BlueprintIdentifier = "6346F40C1B0FF31F008DD617"
+            BuildableName = "Example.app"
+            BlueprintName = "Example"
+            ReferencedContainer = "container:Example.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
       <AdditionalOptions>
@@ -95,10 +95,10 @@
          runnableDebuggingMode = "0">
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "6346F3DC1B0FD302008DD617"
-            BuildableName = "iDSwift.app"
-            BlueprintName = "iDSwift"
-            ReferencedContainer = "container:iDSwift.xcodeproj">
+            BlueprintIdentifier = "6346F40C1B0FF31F008DD617"
+            BuildableName = "Example.app"
+            BlueprintName = "Example"
+            ReferencedContainer = "container:Example.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </ProfileAction>

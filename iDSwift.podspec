@@ -26,7 +26,10 @@ Pod::Spec.new do |s|
   end
 
   s.subspec "iD" do |ss|
-    ss.resources = "Submodules/iD/data/presets/*.json"
+    ss.resource_bundles = {
+      "PresetsInfo" =>  ["Submodules/iD/data/presets/*.json"],
+      "Preset" => ["Submodules/iD/data/presets/presets/*/*.json", "Submodules/iD/data/presets/presets/*.json"]
+      }
   end
 
 end

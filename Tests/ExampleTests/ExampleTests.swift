@@ -1,6 +1,6 @@
 //
-//  iDSwiftTests.swift
-//  iDSwiftTests
+//  ExampleTests.swift
+//  ExampleTests
 //
 //  Created by David Chiles on 5/22/15.
 //  Copyright (c) 2015 David Chiles. All rights reserved.
@@ -8,8 +8,9 @@
 
 import UIKit
 import XCTest
+import iDSwift
 
-class iDSwiftTests: XCTestCase {
+class ExampleTests: XCTestCase {
     
     override func setUp() {
         super.setUp()
@@ -22,8 +23,7 @@ class iDSwiftTests: XCTestCase {
     }
     
     func testExample() {
-        // This is an example of a functional test case.
-        XCTAssert(true, "Pass")
+        Parser.parseAllPresets()
     }
     
     func testPerformanceExample() {

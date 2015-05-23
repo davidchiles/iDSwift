@@ -1,6 +1,6 @@
 source 'https://github.com/CocoaPods/Specs.git'
 
-target :iDSwiftTests do
+target :ExampleTests do
 	use_frameworks!
     platform :ios, '8.0'
     pod 'iDSwift', :path => '../iDSwift.podspec'

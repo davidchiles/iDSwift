@@ -30,7 +30,15 @@
     },
     {
       "name": "iD",
-      "resources": "Submodules/iD/data/presets/*.json"
+      "resource_bundles": {
+        "PresetsInfo": [
+          "Submodules/iD/data/presets/*.json"
+        ],
+        "Preset": [
+          "Submodules/iD/data/presets/presets/*/*.json",
+          "Submodules/iD/data/presets/presets/*.json"
+        ]
+      }
     }
   ]
 }
