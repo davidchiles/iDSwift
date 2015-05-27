@@ -35,8 +35,7 @@
           "Submodules/iD/data/presets/*.json"
         ],
         "Preset": [
-          "Submodules/iD/data/presets/presets/*/*.json",
-          "Submodules/iD/data/presets/presets/*.json"
+          "presets/*.json"
         ]
       }
     }

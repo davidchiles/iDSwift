@@ -11,27 +11,28 @@ import Foundation
 
 public class Parser {
     
-    public class func parseAllPresets() {
+    public class func parseAllPresets(queue: dispatch_queue_t = dispatch_get_main_queue(), foundPreset: (preset: Preset) -> Void, completion: () -> Void) {
         
         var resourcePath = NSBundle(forClass: self).pathForResource("Preset", ofType: "bundle");
         if  let directory = resourcePath {
             if let fileEnumerator = NSFileManager.defaultManager().enumeratorAtPath(directory) {
+                var group = dispatch_group_create()
                 while var file: AnyObject = fileEnumerator.nextObject() {
-                    if let fileString :String = file as? String {
-                        var fullPath = String.pathWithComponents([directory,fileString]);
-                        var someData = NSData(contentsOfFile: fullPath)
-                        if let data = someData {
-                            if let preset = self.parseJSONData(data) {
-                                println(preset)
+                    dispatch_group_async(group, dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), { () -> Void in
+                        if let fileString :String = file as? String {
+                            var fullPath = String.pathWithComponents([directory,fileString]);
+                            if let data = NSData(contentsOfFile: fullPath) {
+                                if let preset = self.parseJSONData(data) {
+                                    dispatch_group_async(group, queue, { () -> Void in
+                                        foundPreset(preset: preset)
+                                    })
+                                }
                             }
-                            
                         }
-                        
-                    }
-                    
+                    })
                 }
+                dispatch_group_notify(group, queue, completion)
             }
-            
         }
     }
     

@@ -8,31 +8,47 @@
 
 import Foundation
 
-enum GeometryType : String {
-    case None   = ""
-    case Point  = "point"
-    case Vertex = "vertex"
-    case Line   = "line"
-    case Area   = "area"
+public enum GeometryType : String, Printable {
+    case None     = ""
+    case Point    = "point"
+    case Vertex   = "vertex"
+    case Line     = "line"
+    case Area     = "area"
+    case Relation = "relation"
+    
+    public var description: String {
+        return self.rawValue
+    }
 }
 
-class Preset {
+public class Preset {
     
-    var geometry = [GeometryType]()
+    public var geometry = [GeometryType]()
     
-    var tags = [String:String]()
+    public var tags = [String:String]()
     
-    var fields = [String]()
+    public var addTags: [String:String]?
+    public var removeTags: [String:String]?
     
-    var name = String()
+    public var fields = [String]()
     
-    var icon = String()
+    public var name = String()
     
-    var searchable = true
+    //Default Icon from maki
+    public var icon = "marker-stroked"
     
-    var matchScore = 1;
+    public var searchable = true
+    
+    public var matchScore:Double = 1;
+    
+    public var terms = [String]()
     
     init(presetJSONDictionary: Dictionary<String,AnyObject>) {
+        
+        if let name = presetJSONDictionary["name"] as? String {
+            self.name = name
+        }
+        
         if let fields = presetJSONDictionary["fields"] as? [String] {
             self.fields = fields
         }
@@ -41,8 +57,36 @@ class Preset {
             self.tags = tags;
         }
         
+        let removeTags = presetJSONDictionary["removeTags"] as? [String:String]
+        if removeTags?.count > 0 {
+            self.removeTags = removeTags;
+        }
+        
+        let addTags = presetJSONDictionary["addTags"] as? [String:String]
+        if addTags?.count > 0 {
+            self.addTags = addTags;
+        }
+        
         if let geometry = presetJSONDictionary["geometry"] as? [String] {
-            
+            for string in geometry {
+                self.geometry.append(GeometryType(rawValue: string)!)
+            }
+        }
+        
+        if let icon = presetJSONDictionary["icon"] as? String {
+            self.icon = icon;
+        }
+        
+        if let searchable = presetJSONDictionary["searchable"] as? Bool {
+            self.searchable = searchable;
+        }
+        
+        if let matchScore = presetJSONDictionary["matchScore"] as? Double {
+            self.matchScore = matchScore;
+        }
+        
+        if let terms = presetJSONDictionary["terms"] as? [String] {
+            self.terms = terms;
         }
     }
     
