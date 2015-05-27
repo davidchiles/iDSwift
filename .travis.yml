@@ -1,0 +1,12 @@
+language: objective-c
+osx_image: beta-xcode6.3
+
+before_install: 
+- brew update
+- if brew outdated | grep -qx xctool; then brew upgrade xctool; fi
+- gem install cocoapods --no-rdoc --no-ri
+- git submodule update --init --recursive
+- pod install --project-directory=./Tests/
+
+script:
+  - xcodebuild -workspace ./Tests/Example.xcworkspace -scheme Example -sdk iphonesimulator ONLY_ACTIVE_ARCH=NO test

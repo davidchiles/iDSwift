@@ -18,10 +18,6 @@ Pod::Spec.new do |s|
   s.platform     = :ios, "8.0"
   s.source       = { :git => "https://github.com/davidchiles/iDSwift.git", :submodules => true}
   
-  # s.prepare_command = <<-CMD
-  #                       find ./Submodules/iD/data/presets/presets -iname "*.json" -mindepth 2 -exec bash -c 'mv "$0" "${0%\.json}$(basename $(dirname "$0")).json"' {} \\;
-  #                  CMD
-  
   s.default_subspecs = 'standard', 'iD'
 
 
@@ -49,8 +45,11 @@ Pod::Spec.new do |s|
     end
 
     def ss.recursiveJSONCheck(directory)
-
+      Dir.foreach(Dir.pwd) do |item|
+        print item
+      end
       Dir.foreach(directory) do |item|
+        
         next if item == '.' or item == '..' or item == '.DS_Store'
         path = File.join(directory, item)
         if File.directory?(path)
