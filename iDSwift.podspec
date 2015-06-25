@@ -17,7 +17,7 @@ Pod::Spec.new do |s|
   s.social_media_url   = "http://twitter.com/dchiles"
   s.platform     = :ios, "8.0"
   s.source       = { :git => "https://github.com/davidchiles/iDSwift.git", :submodules => true}
-  
+
   s.default_subspecs = 'standard', 'iD'
 
 
@@ -38,18 +38,18 @@ Pod::Spec.new do |s|
       @newPath = File.join('./presets/',@name+".json")
       if File.exist?(@newPath)
         self.getNewFileName(existingPath,depth+1)
-      else 
+      else
         return @newPath
       end
 
     end
 
     def ss.recursiveJSONCheck(directory)
-      Dir.foreach(Dir.pwd) do |item|
-        print item
-      end
+      # Dir.foreach(Dir.pwd) do |item|
+      #   print item
+      # end
       Dir.foreach(directory) do |item|
-        
+
         next if item == '.' or item == '..' or item == '.DS_Store'
         path = File.join(directory, item)
         if File.directory?(path)
@@ -59,14 +59,18 @@ Pod::Spec.new do |s|
           #print @newPath + "\n"
           FileUtils.mkdir_p(File.dirname(@newPath))
           FileUtils.copy_file(path,@newPath,:force => true)
-        end   
+        end
       end
     end
 
+    if Dir.exists?('./presets')
+      FileUtils.remove_dir('./presets')
+    end
     ss.recursiveJSONCheck('./Submodules/iD/data/presets/presets/')
 
     ss.resource_bundles = {
       "PresetsInfo" =>  ["Submodules/iD/data/presets/*.json"],
+      "Data" => ["Submodules/iD/data/*.json"],
       "Preset" => ["presets/*.json"]
       }
 

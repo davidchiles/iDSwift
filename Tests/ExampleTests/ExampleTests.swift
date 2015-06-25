@@ -22,11 +22,11 @@ class ExampleTests: XCTestCase {
         super.tearDown()
     }
     
-    func testExample() {
+    func testPresetsParser() {
         var numberOfPresets = 0
         var expectation = self.expectationWithDescription("testExample")
         
-        Parser.parseAllPresets(foundPreset: { (preset) -> Void in
+        PresetParser.parseAllPresets(foundPreset: { (preset) -> Void in
             numberOfPresets = numberOfPresets + 1
             var nameLength = count(preset.name)
             var geometryLength = count(preset.geometry)
@@ -41,15 +41,55 @@ class ExampleTests: XCTestCase {
         
         var error: NSError
         self.waitForExpectationsWithTimeout(500, handler: { (error) -> Void in
-            XCTAssertEqual(numberOfPresets, 581, "Did not find all presets")
+            XCTAssertEqual(numberOfPresets, 587, "Did not find all presets")
         })
     }
     
-    func testPerformanceExample() {
-        // This is an example of a performance test case.
-        self.measureBlock() {
-            // Put the code you want to measure the time of here.
+    func testDeprecatedTagsParser() {
+        var numberOfDeprecatedTags = 0
+        var expectation = self.expectationWithDescription("deprecatedTags")
+        
+        DeprecatedTagParser.parseAllDeprecatedTags(foundDeprecatedTag: { (deprecatedTag) -> Void in
+            
+            numberOfDeprecatedTags = numberOfDeprecatedTags + 1
+            var oldTagCount = count(deprecatedTag.oldTags)
+            var newTagCount = count(deprecatedTag.newTags)
+            XCTAssertGreaterThan(oldTagCount, 0, "No old Tags")
+            XCTAssertGreaterThan(newTagCount, 0, "No new Tags")
+            
+        }) { () -> Void in
+            expectation.fulfill()
         }
+        
+        var error: NSError
+        self.waitForExpectationsWithTimeout(4, handler: { (error) -> Void in
+            XCTAssertEqual(numberOfDeprecatedTags, 13, "Only found \(numberOfDeprecatedTags) deprecated tags")
+        })
     }
     
+    func testPresetCategoryParser() {
+        var numberOfCategories = 0
+        var expectation = self.expectationWithDescription("Categories")
+        
+        PresetCategoriesParser.parseAllPresetCategories(foundPresetCategory: { (category) -> Void in
+            numberOfCategories = numberOfCategories + 1
+            var countOfMembers = count(category.members)
+            var nameLength = count(category.name)
+            var iconLength = count(category.iconName)
+            var hasGeometry = category.geometry != .None
+            
+            XCTAssertTrue(hasGeometry, "Has no geometry")
+            XCTAssertGreaterThan(iconLength, 0, "No icon name")
+            XCTAssertGreaterThan(nameLength, 0, "No name")
+            XCTAssertGreaterThan(countOfMembers, 0, "No members found")
+            
+        }) { () -> Void in
+            expectation.fulfill()
+        }
+        
+        var error: NSError
+        self.waitForExpectationsWithTimeout(5, handler: { (error) -> Void in
+            XCTAssertEqual(numberOfCategories, 10, "Only found \(numberOfCategories) categories")
+        })
+    }
 }

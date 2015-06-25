@@ -34,6 +34,9 @@
         "PresetsInfo": [
           "Submodules/iD/data/presets/*.json"
         ],
+        "Data": [
+          "Submodules/iD/data/*.json"
+        ],
         "Preset": [
           "presets/*.json"
         ]

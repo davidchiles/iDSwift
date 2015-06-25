@@ -89,5 +89,30 @@ public class Preset {
             self.terms = terms;
         }
     }
+}
+
+public class PresetCategory {
     
+    public var name = String()
+    public var geometry = GeometryType.None
+    public var iconName = String()
+    public var members = [String]()
+    
+    init(categoryDictionary:Dictionary<String, AnyObject>) {
+        if let name = categoryDictionary["name"] as? String {
+            self.name = name;
+        }
+        
+        if let geoString = categoryDictionary["geometry"] as? String {
+            self.geometry = GeometryType(rawValue: geoString)!
+        }
+        
+        if let iconString = categoryDictionary["icon"] as? String {
+            self.iconName = iconString
+        }
+        
+        if let membersArray = categoryDictionary["members"] as? Array<String> {
+            self.members = membersArray
+        }
+    }
 }
