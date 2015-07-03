@@ -151,4 +151,14 @@ class ExampleTests: XCTestCase {
             XCTAssertEqual(numberOfPlaceHolder, 31, "Only found \(numberOfPlaceHolder) placeholders")
         })
     }
+    
+    func testDiscardedTags() {
+        
+        DiscardedParser.parse { (discarded) -> Void in
+            var length = count(discarded)
+            
+            XCTAssertEqual(length, 41, "Only found \(length) discarded tags")
+        }
+        
+    }
 }

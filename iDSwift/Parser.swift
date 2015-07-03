@@ -8,6 +8,16 @@
 
 import Foundation
 
+public class Parser {
+    class func parseJSONFile(bundleName:String, fileName:String) -> AnyObject? {
+        if let path = NSBundle(forClass: self).pathForResource(bundleName, ofType: "bundle")?.stringByAppendingPathComponent(fileName+".json") {
+            if let data = NSData(contentsOfFile: path) {
+                return NSJSONSerialization.JSONObjectWithData(data, options: .allZeros, error: nil)
+            }
+        }
+        return nil
+    }
+}
 
 public class PresetParser {
     
@@ -103,15 +113,25 @@ public class PresetFieldsParser {
                         var field = PresetField(fieldDictionary: value)
                         foundPresetField(field: field)
                         
-                        //println("Key: \(key) Value: \(value)")
                     }
                     println("Types \(typeSet)")
                     completion()
                 }
             }
         }
-        
+    }
+}
+
+public class DiscardedParser {
+    public class func parse(queue: dispatch_queue_t = dispatch_get_main_queue(), completion: (discarded: [String]) -> Void) {
+        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), { () -> Void in
+            if let discardedArray = Parser.parseJSONFile("Data",fileName: "discarded") as? [String] {
+                dispatch_async(queue, { () -> Void in
+                    completion(discarded: discardedArray)
+                })
+            }
+        })
         
     }
-    
 }
+

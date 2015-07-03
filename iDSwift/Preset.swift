@@ -150,7 +150,7 @@ public class PresetField {
     public var placeholder: String?
     public var iconName: String?
     public var options: [String]?
-    var strings: Dictionary<String, String>?
+    var strings: [String: String]?
     
     init(fieldDictionary:Dictionary<String, AnyObject>) {
         
@@ -181,7 +181,7 @@ public class PresetField {
             self.options = options
         }
         
-        if let strings = fieldDictionary["strings"] as? Dictionary<String,Dictionary<String,String>> {
+        if let strings = fieldDictionary["strings"] as? [String:[String: String]] {
             self.strings = strings["options"]
             
             if self.options == nil {
@@ -198,12 +198,12 @@ public class PresetField {
         }
         
         if self.type == .Access {
-            if let accessStrings = fieldDictionary["strings"] as? Dictionary<String,AnyObject> {
-                if let typeStrings = accessStrings["types"] as? Dictionary<String, String> {
+            if let accessStrings = fieldDictionary["strings"] as? [String: AnyObject] {
+                if let typeStrings = accessStrings["types"] as? [String: String] {
                     self.strings = typeStrings
                 }
                 
-                if let optionsStrings = accessStrings["options"] as? Dictionary<String, Dictionary<String,String>> {
+                if let optionsStrings = accessStrings["options"] as? [String: [String: String]] {
                     for (key, value) in optionsStrings {
                         if let title = value["title"] {
                             self.strings?.updateValue(title, forKey: key)
