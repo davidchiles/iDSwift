@@ -28,50 +28,9 @@ Pod::Spec.new do |s|
 
   s.subspec "iD" do |ss|
 
-    def ss.getNewFileName(existingPath,depth)
-      @name = File.basename(existingPath, ".json")
-      @modifiedPath = existingPath
-      for i in 0..depth
-        @name = @name + "-" + File.basename(File.dirname(@modifiedPath))
-        @modifiedPath = File.expand_path("..",@modifiedPath)
-      end
-      @newPath = File.join('./presets/',@name+".json")
-      if File.exist?(@newPath)
-        self.getNewFileName(existingPath,depth+1)
-      else
-        return @newPath
-      end
-
-    end
-
-    def ss.recursiveJSONCheck(directory)
-      # Dir.foreach(Dir.pwd) do |item|
-      #   print item
-      # end
-      Dir.foreach(directory) do |item|
-
-        next if item == '.' or item == '..' or item == '.DS_Store'
-        path = File.join(directory, item)
-        if File.directory?(path)
-          recursiveJSONCheck(path)
-        elsif File.extname(path) == ".json"
-          @newPath = self.getNewFileName(path,0)
-          #print @newPath + "\n"
-          FileUtils.mkdir_p(File.dirname(@newPath))
-          FileUtils.copy_file(path,@newPath,:force => true)
-        end
-      end
-    end
-
-    if Dir.exists?('./presets')
-      FileUtils.remove_dir('./presets')
-    end
-    ss.recursiveJSONCheck('./Submodules/iD/data/presets/presets/')
-
     ss.resource_bundles = {
-      "PresetsInfo" =>  ["Submodules/iD/data/presets/*.json"],
-      "Data" => ["Submodules/iD/data/*.json"],
-      "Preset" => ["presets/*.json"]
+      "Preset" =>  ["Submodules/iD/data/presets/*.json"],
+      "Data" => ["Submodules/iD/data/*.json"]
       }
 
   end

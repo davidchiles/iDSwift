@@ -41,7 +41,7 @@ class ExampleTests: XCTestCase {
         
         var error: NSError
         self.waitForExpectationsWithTimeout(500, handler: { (error) -> Void in
-            XCTAssertEqual(numberOfPresets, 587, "Did not find all presets")
+            XCTAssertEqual(numberOfPresets, 2022, "Did not find all presets")
         })
     }
     
@@ -90,6 +90,65 @@ class ExampleTests: XCTestCase {
         var error: NSError
         self.waitForExpectationsWithTimeout(5, handler: { (error) -> Void in
             XCTAssertEqual(numberOfCategories, 10, "Only found \(numberOfCategories) categories")
+        })
+    }
+    
+    func testPresetFieldParser() {
+        
+        var numberOfFields = 0
+        var numberOfUniversal = 0
+        var numberOfPlaceHolder = 0
+        var numberOfIcon = 0
+        var expectation = self.expectationWithDescription("Fields")
+        
+        var excludeKeySet = Set(["Turn Restrictions"])
+        
+        PresetFieldsParser.parseAllPresetFields(foundPresetField: { (field) -> Void in
+            
+            numberOfFields = numberOfFields + 1
+            
+            var hasType = field.type != .None
+            var hasLabel = count(field.label) > 0
+            
+            var hasKey = false
+            if let key = field.key {
+                hasKey = count(key) > 0
+            }
+            
+            if let keys = field.keys {
+                hasKey = count(keys) > 0
+            }
+            
+            if field.universal {
+                numberOfUniversal = numberOfUniversal + 1
+            }
+            
+            if let placeholder = field.placeholder {
+                numberOfPlaceHolder = numberOfPlaceHolder + 1
+            }
+            
+            if let icon = field.iconName {
+                numberOfIcon = numberOfIcon + 1
+            }
+            
+            XCTAssertTrue(hasLabel, "No label")
+            XCTAssertTrue(hasType, "Field does not have type")
+            
+            if !excludeKeySet.contains(field.label) {
+                XCTAssertTrue(hasKey, "Field: \(field.label) does not have a key(s)")
+            }
+            
+            
+        }) { () -> Void in
+            expectation.fulfill()
+        }
+        
+        var error: NSError
+        self.waitForExpectationsWithTimeout(500, handler: { (error) -> Void in
+            XCTAssertEqual(numberOfFields, 167, "Only found \(numberOfFields) fields")
+            XCTAssertEqual(numberOfUniversal, 8, "Only found \(numberOfUniversal) universal fields")
+            XCTAssertEqual(numberOfIcon, 9, "Only found \(numberOfIcon) icons")
+            XCTAssertEqual(numberOfPlaceHolder, 31, "Only found \(numberOfPlaceHolder) placeholders")
         })
     }
 }

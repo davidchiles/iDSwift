@@ -21,6 +21,29 @@ public enum GeometryType : String, Printable {
     }
 }
 
+public enum FieldType: String, Printable {
+    case None         = ""
+    case Combo        = "combo"
+    case Radio        = "radio"
+    case Text         = "text"
+    case Check        = "check"
+    case URL          = "url"
+    case Telephone    = "tel"
+    case Access       = "access"
+    case Number       = "number"
+    case Wikipedia    = "wikipedia"
+    case TypeCombo    = "typeCombo"
+    case Address      = "address"
+    case Restrictions = "restrictions"
+    case TextArea     = "textarea"
+    case Localized    = "localized"
+    case MaxSpeed     = "maxspeed"
+    
+    public var description: String {
+        return self.rawValue
+    }
+}
+
 public class Preset {
     
     public var geometry = [GeometryType]()
@@ -115,4 +138,90 @@ public class PresetCategory {
             self.members = membersArray
         }
     }
+}
+
+public class PresetField {
+    
+    public var type = FieldType.None
+    public var key: String?
+    public var keys: [String]?
+    public var label = String()
+    public var universal = false
+    public var placeholder: String?
+    public var iconName: String?
+    public var options: [String]?
+    var strings: Dictionary<String, String>?
+    
+    init(fieldDictionary:Dictionary<String, AnyObject>) {
+        
+        if let labelString = fieldDictionary["label"] as? String {
+            self.label = labelString
+        }
+        
+        if let typeString = fieldDictionary["type"] as? String {
+            self.type = FieldType(rawValue: typeString)!
+        }
+        
+        if let key = fieldDictionary["key"] as? String {
+            self.key = key
+        }
+        
+        if let keys = fieldDictionary["keys"] as? [String] {
+            self.keys = keys
+        }
+        
+        if let universal = fieldDictionary["universal"] as? Bool {
+            self.universal = universal
+        }
+        
+        self.placeholder = fieldDictionary["placeholder"] as? String
+        self.iconName = fieldDictionary["icon"] as? String
+        
+        if let options = fieldDictionary["options"] as? [String] {
+            self.options = options
+        }
+        
+        if let strings = fieldDictionary["strings"] as? Dictionary<String,Dictionary<String,String>> {
+            self.strings = strings["options"]
+            
+            if self.options == nil {
+                self.options = self.strings?.keys.array
+            }
+            
+            if let pStrings = strings["placeholders"] {
+                if var tempStrings = self.strings {
+                    tempStrings += pStrings
+                } else {
+                    self.strings = pStrings
+                }
+            }
+        }
+        
+        if self.type == .Access {
+            if let accessStrings = fieldDictionary["strings"] as? Dictionary<String,AnyObject> {
+                if let typeStrings = accessStrings["types"] as? Dictionary<String, String> {
+                    self.strings = typeStrings
+                }
+                
+                if let optionsStrings = accessStrings["options"] as? Dictionary<String, Dictionary<String,String>> {
+                    for (key, value) in optionsStrings {
+                        if let title = value["title"] {
+                            self.strings?.updateValue(title, forKey: key)
+                        }
+                    }
+                }
+            }
+
+        }
+        
+        
+    }
+    
+    public func stringForValue(value:String) -> String? {
+        if let strings = self.strings {
+            return strings[value]
+        }
+        return nil
+    }
+    
 }

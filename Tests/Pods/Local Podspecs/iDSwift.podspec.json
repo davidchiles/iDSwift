@@ -31,14 +31,11 @@
     {
       "name": "iD",
       "resource_bundles": {
-        "PresetsInfo": [
+        "Preset": [
           "Submodules/iD/data/presets/*.json"
         ],
         "Data": [
           "Submodules/iD/data/*.json"
-        ],
-        "Preset": [
-          "presets/*.json"
         ]
       }
     }

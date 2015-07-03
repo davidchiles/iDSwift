@@ -13,6 +13,6 @@ EXTERNAL SOURCES:
     :path: "../iDSwift.podspec"
 
 SPEC CHECKSUMS:
-  iDSwift: 55601b81d2127c6ed5480630b1f39fe1b33acdd6
+  iDSwift: 41637343b2a45d4f4c20cdefe1e61f971b90a548
 
 COCOAPODS: 0.37.2
