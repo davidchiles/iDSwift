@@ -22,19 +22,19 @@ public class Parser {
         return try JSONSerialization.jsonObject(with: data, options: [])
     }
     
-    internal class func parseJSONArray<T>(bundleName:String, fileName:String, key:String?, transform:(Any)->T?) throws -> [T] {
+    internal class func parseJSONArray<T>(bundleName:String, fileName:String, key:String?, transform:(Any) throws ->T?) throws -> [T] {
         let jsonObject = try self.parseJSONFile(bundleName: bundleName, fileName: fileName)
         
         if let jsonDict = jsonObject as? Dictionary<String,Array<Any>>, let k = key, let arr = jsonDict[k] {
-            return arr.map(transform).flatMap( { $0 })
+            return try arr.map(transform).flatMap( { $0 })
         }
         if let jsonArray = jsonObject as? Array<Any> {
-            return jsonArray.map(transform).flatMap( { $0 })
+            return try jsonArray.map(transform).flatMap( { $0 })
         }
         throw ParseError.InvalidJSONStructure
     }
     
-    internal class func parseJSONDict<T>(bundleName:String, fileName:String, key:String? = nil, transform:(_ key:String,_ value:Any)->T?) throws -> [T] {
+    internal class func parseJSONDict<T>(bundleName:String, fileName:String, key:String? = nil, transform:(_ key:String,_ value:Any) throws ->T?) throws -> [T] {
         guard var jsonObject = try self.parseJSONFile(bundleName: bundleName, fileName: fileName) as? Dictionary<String,Any> else {
             throw ParseError.InvalidJSONStructure
         }
@@ -44,7 +44,7 @@ public class Parser {
             }
         }
         
-        return jsonObject.map(transform).flatMap( { $0 })
+        return try jsonObject.map(transform).flatMap( { $0 })
     }
 }
 
@@ -55,7 +55,7 @@ extension Parser {
             guard let dict = value as? Dictionary<String, AnyObject> else {
                 return nil
             }
-            return Preset(presetJSONDictionary: dict)
+            return try Preset(presetJSONDictionary: dict)
         })
     }
     
@@ -73,7 +73,7 @@ extension Parser {
             guard let dict = value as? Dictionary<String, AnyObject> else {
                 return nil
             }
-            return PresetCategory(categoryDictionary: dict)
+            return try PresetCategory(categoryDictionary: dict)
         })
     }
     
@@ -82,7 +82,7 @@ extension Parser {
             guard let dict = value as? Dictionary<String, AnyObject> else {
                 return nil
             }
-            return PresetField(fieldDictionary: dict)
+            return try PresetField(fieldDictionary: dict)
         })
     }
     

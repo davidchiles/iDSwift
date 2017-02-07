@@ -59,7 +59,6 @@ class ExampleTests: XCTestCase {
         XCTAssertEqual(categories.count, expectedCategoryCount,"Find all categories")
         
         categories.forEach { (category) in
-            XCTAssertNotEqual(category.geometry, .None, "Has no geometry")
             XCTAssertGreaterThan(category.iconName.characters.count, 0, "No icon name")
             XCTAssertGreaterThan(category.name.characters.count, 0, "No name")
             XCTAssertGreaterThan(category.members.count, 0, "No members found")
@@ -77,7 +76,6 @@ class ExampleTests: XCTestCase {
         
         fields.forEach { (field) in
             XCTAssertTrue(field.label.characters.count > 0, "No label")
-            XCTAssertTrue(field.type != .None , "Field does not have type")
         }
     }
     
