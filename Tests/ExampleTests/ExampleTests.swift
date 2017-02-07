@@ -10,7 +10,15 @@ import UIKit
 import XCTest
 import iDSwift
 
+
+
 class ExampleTests: XCTestCase {
+    
+    let expectedPresetCount = 2144
+    let expectedDeprecatedCount = 13
+    let expectedCategoryCount = 14
+    let expectedPresetFieldsCount = 218
+    let expectedDiscardedCount = 42
     
     override func setUp() {
         super.setUp()
@@ -25,7 +33,7 @@ class ExampleTests: XCTestCase {
     func testPresetsParser() {
         let presets = try! Parser.parseAllPresets()
         
-        XCTAssertEqual(presets.count, 2022,"Find all presets")
+        XCTAssertEqual(presets.count, expectedPresetCount,"Find all presets")
         presets.forEach { (preset) in
             XCTAssertGreaterThan(preset.name.characters.count, 0, "No name")
             XCTAssertGreaterThan(preset.geometry.count, 0, "No Geometry \(preset.name)")
@@ -37,7 +45,7 @@ class ExampleTests: XCTestCase {
         
         let deprecatedTags = try! Parser.parseAllDeprecatedTags()
         
-        XCTAssertEqual(deprecatedTags.count, 13,"Find all deprecated")
+        XCTAssertEqual(deprecatedTags.count, expectedDeprecatedCount,"Find all deprecated")
         deprecatedTags.forEach { (deprecatedTag) in
             XCTAssertGreaterThan(deprecatedTag.oldTags.count, 0, "No old Tags")
             XCTAssertGreaterThan(deprecatedTag.newTags.count, 0, "No new Tags")
@@ -48,7 +56,7 @@ class ExampleTests: XCTestCase {
         
         let categories = try! Parser.parseAllPresetCategories()
         
-        XCTAssertEqual(categories.count, 10,"Find all categories")
+        XCTAssertEqual(categories.count, expectedCategoryCount,"Find all categories")
         
         categories.forEach { (category) in
             XCTAssertNotEqual(category.geometry, .None, "Has no geometry")
@@ -62,10 +70,10 @@ class ExampleTests: XCTestCase {
     
         let fields = try! Parser.parseAllPresetFields()
         
-        XCTAssertEqual(fields.count, 167, "Only found \(fields.count) fields")
-        XCTAssertEqual(fields.filter { $0.universal }.count, 8, "Universal fields")
-        XCTAssertEqual(fields.filter { $0.iconName != nil }.count, 9, "Icons")
-        XCTAssertEqual(fields.filter { $0.placeholder != nil }.count, 31, "Placeholders")
+        XCTAssertEqual(fields.count, expectedPresetFieldsCount, "Found \(fields.count) fields")
+        XCTAssertEqual(fields.filter { $0.universal }.count, 13, "Universal fields")
+        XCTAssertEqual(fields.filter { $0.iconName != nil }.count, 10, "Icons")
+        XCTAssertEqual(fields.filter { $0.placeholder != nil }.count, 39, "Placeholders")
         
         fields.forEach { (field) in
             XCTAssertTrue(field.label.characters.count > 0, "No label")
@@ -76,6 +84,6 @@ class ExampleTests: XCTestCase {
     func testDiscardedTags() {
         let discarded = try! Parser.parseDiscarded()
         
-        XCTAssertEqual(discarded.count, 41)
+        XCTAssertEqual(discarded.count, expectedDiscardedCount)
     }
 }

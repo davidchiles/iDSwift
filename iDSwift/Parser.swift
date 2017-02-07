@@ -22,17 +22,28 @@ public class Parser {
         return try JSONSerialization.jsonObject(with: data, options: [])
     }
     
-    internal class func parseJSONArray<T>(bundleName:String, fileName:String, transform:(Any)->T?) throws -> [T] {
-        guard let jsonObject = try self.parseJSONFile(bundleName: bundleName, fileName: fileName) as? Array<Any> else {
-            throw ParseError.InvalidJSONStructure
+    internal class func parseJSONArray<T>(bundleName:String, fileName:String, key:String?, transform:(Any)->T?) throws -> [T] {
+        let jsonObject = try self.parseJSONFile(bundleName: bundleName, fileName: fileName)
+        
+        if let jsonDict = jsonObject as? Dictionary<String,Array<Any>>, let k = key, let arr = jsonDict[k] {
+            return arr.map(transform).flatMap( { $0 })
         }
-        return jsonObject.map(transform).flatMap( { $0 })
+        if let jsonArray = jsonObject as? Array<Any> {
+            return jsonArray.map(transform).flatMap( { $0 })
+        }
+        throw ParseError.InvalidJSONStructure
     }
     
-    internal class func parseJSONDict<T>(bundleName:String, fileName:String, transform:(_ key:String,_ value:Any)->T?) throws -> [T] {
-        guard let jsonObject = try self.parseJSONFile(bundleName: bundleName, fileName: fileName) as? Dictionary<String,Any> else {
+    internal class func parseJSONDict<T>(bundleName:String, fileName:String, key:String? = nil, transform:(_ key:String,_ value:Any)->T?) throws -> [T] {
+        guard var jsonObject = try self.parseJSONFile(bundleName: bundleName, fileName: fileName) as? Dictionary<String,Any> else {
             throw ParseError.InvalidJSONStructure
         }
+        if let key = key {
+            if let obj = jsonObject[key] as? Dictionary<String,Any> {
+                jsonObject = obj
+            }
+        }
+        
         return jsonObject.map(transform).flatMap( { $0 })
     }
 }
@@ -40,7 +51,7 @@ public class Parser {
 extension Parser {
     
     public class func parseAllPresets() throws -> [Preset] {
-        return try self.parseJSONDict(bundleName: "Preset", fileName: "presets", transform: { (key, value) -> Preset? in
+        return try self.parseJSONDict(bundleName: "Preset", fileName: "presets", key:"presets", transform: { (key, value) -> Preset? in
             guard let dict = value as? Dictionary<String, AnyObject> else {
                 return nil
             }
@@ -49,7 +60,7 @@ extension Parser {
     }
     
     public class func parseAllDeprecatedTags() throws -> [DeprecatedTag] {
-        return try self.parseJSONArray(bundleName: "Data", fileName: "deprecated", transform: { (object) -> DeprecatedTag? in
+        return try self.parseJSONArray(bundleName: "Data", fileName: "deprecated",key:"dataDeprecated", transform: { (object) -> DeprecatedTag? in
             guard let dict = object as? Dictionary<String, Dictionary<String, String>>,let oldTags = dict["old"],let newTags = dict["replace"] else {
                 return nil
             }
@@ -58,7 +69,7 @@ extension Parser {
     }
     
     public class func parseAllPresetCategories() throws -> [PresetCategory] {
-        return try self.parseJSONDict(bundleName: "Preset", fileName: "categories", transform: { (key, value) -> PresetCategory? in
+        return try self.parseJSONDict(bundleName: "Preset", fileName: "categories", key:"categories", transform: { (key, value) -> PresetCategory? in
             guard let dict = value as? Dictionary<String, AnyObject> else {
                 return nil
             }
@@ -67,7 +78,7 @@ extension Parser {
     }
     
     public class func parseAllPresetFields() throws -> [PresetField] {
-        return try self.parseJSONDict(bundleName: "Preset", fileName: "fields", transform: { (key, value) -> PresetField? in
+        return try self.parseJSONDict(bundleName: "Preset", fileName: "fields",key:"fields", transform: { (key, value) -> PresetField? in
             guard let dict = value as? Dictionary<String, AnyObject> else {
                 return nil
             }
@@ -76,7 +87,7 @@ extension Parser {
     }
     
     public class func parseDiscarded() throws -> [String] {
-        return try self.parseJSONArray(bundleName: "Data", fileName: "discarded", transform: { (value) -> String? in
+        return try self.parseJSONArray(bundleName: "Data", fileName: "discarded",key:"dataDiscarded", transform: { (value) -> String? in
             if let str = value as? String {
                 return str
             }

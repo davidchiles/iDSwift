@@ -48,6 +48,8 @@ public enum GeometryType : String, CustomStringConvertible {
 public enum FieldType: String, CustomStringConvertible {
     case None         = ""
     case Combo        = "combo"
+    case MultiCombo   = "multiCombo"
+    case NetworkCombo = "networkCombo"
     case Radio        = "radio"
     case Text         = "text"
     case Check        = "check"
@@ -62,6 +64,8 @@ public enum FieldType: String, CustomStringConvertible {
     case TextArea     = "textarea"
     case Localized    = "localized"
     case MaxSpeed     = "maxspeed"
+    case Email        = "email"
+    case Cycleway     = "cycleway"
     
     public var description: String {
         return self.rawValue
