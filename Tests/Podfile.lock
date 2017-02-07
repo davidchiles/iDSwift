@@ -10,9 +10,11 @@ DEPENDENCIES:
 
 EXTERNAL SOURCES:
   iDSwift:
-    :path: "../iDSwift.podspec"
+    :path: ../iDSwift.podspec
 
 SPEC CHECKSUMS:
-  iDSwift: 41637343b2a45d4f4c20cdefe1e61f971b90a548
+  iDSwift: ad9e290de60a747a35b3aab3edeb221ff2755c85
 
-COCOAPODS: 0.37.2
+PODFILE CHECKSUM: 21c6e0ea16f7ad9e7c45c2ba44d79d38b6bbe082
+
+COCOAPODS: 1.2.0.rc.1

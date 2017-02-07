@@ -7,8 +7,32 @@
 //
 
 import Foundation
+// FIXME: comparison operators with optionals were removed from the Swift Standard Libary.
+// Consider refactoring the code to use the non-optional operators.
+fileprivate func < <T : Comparable>(lhs: T?, rhs: T?) -> Bool {
+  switch (lhs, rhs) {
+  case let (l?, r?):
+    return l < r
+  case (nil, _?):
+    return true
+  default:
+    return false
+  }
+}
 
-public enum GeometryType : String, Printable {
+// FIXME: comparison operators with optionals were removed from the Swift Standard Libary.
+// Consider refactoring the code to use the non-optional operators.
+fileprivate func > <T : Comparable>(lhs: T?, rhs: T?) -> Bool {
+  switch (lhs, rhs) {
+  case let (l?, r?):
+    return l > r
+  default:
+    return rhs < lhs
+  }
+}
+
+
+public enum GeometryType : String, CustomStringConvertible {
     case None     = ""
     case Point    = "point"
     case Vertex   = "vertex"
@@ -21,7 +45,7 @@ public enum GeometryType : String, Printable {
     }
 }
 
-public enum FieldType: String, Printable {
+public enum FieldType: String, CustomStringConvertible {
     case None         = ""
     case Combo        = "combo"
     case Radio        = "radio"
@@ -44,27 +68,27 @@ public enum FieldType: String, Printable {
     }
 }
 
-public class Preset {
+open class Preset {
     
-    public var geometry = [GeometryType]()
+    open var geometry = [GeometryType]()
     
-    public var tags = [String:String]()
+    open var tags = [String:String]()
     
-    public var addTags: [String:String]?
-    public var removeTags: [String:String]?
+    open var addTags: [String:String]?
+    open var removeTags: [String:String]?
     
-    public var fields = [String]()
+    open var fields = [String]()
     
-    public var name = String()
+    open var name = String()
     
     //Default Icon from maki
-    public var icon = "marker-stroked"
+    open var icon = "marker-stroked"
     
-    public var searchable = true
+    open var searchable = true
     
-    public var matchScore:Double = 1;
+    open var matchScore:Double = 1;
     
-    public var terms = [String]()
+    open var terms = [String]()
     
     init(presetJSONDictionary: Dictionary<String,AnyObject>) {
         
@@ -114,12 +138,12 @@ public class Preset {
     }
 }
 
-public class PresetCategory {
+open class PresetCategory {
     
-    public var name = String()
-    public var geometry = GeometryType.None
-    public var iconName = String()
-    public var members = [String]()
+    open var name = String()
+    open var geometry = GeometryType.None
+    open var iconName = String()
+    open var members = [String]()
     
     init(categoryDictionary:Dictionary<String, AnyObject>) {
         if let name = categoryDictionary["name"] as? String {
@@ -140,16 +164,16 @@ public class PresetCategory {
     }
 }
 
-public class PresetField {
+open class PresetField {
     
-    public var type = FieldType.None
-    public var key: String?
-    public var keys: [String]?
-    public var label = String()
-    public var universal = false
-    public var placeholder: String?
-    public var iconName: String?
-    public var options: [String]?
+    open var type = FieldType.None
+    open var key: String?
+    open var keys: [String]?
+    open var label = String()
+    open var universal = false
+    open var placeholder: String?
+    open var iconName: String?
+    open var options: [String]?
     var strings: [String: String]?
     
     init(fieldDictionary:Dictionary<String, AnyObject>) {
@@ -184,9 +208,9 @@ public class PresetField {
         if let strings = fieldDictionary["strings"] as? [String:[String: String]] {
             self.strings = strings["options"]
             
-            if self.options == nil {
-                self.options = self.strings?.keys.array
-            }
+//            if self.options == nil {
+//                self.options = [String] (self.strings?.keys)
+//            }
             
             if let pStrings = strings["placeholders"] {
                 if var tempStrings = self.strings {
@@ -217,7 +241,7 @@ public class PresetField {
         
     }
     
-    public func stringForValue(value:String) -> String? {
+    open func stringForValue(_ value:String) -> String? {
         if let strings = self.strings {
             return strings[value]
         }

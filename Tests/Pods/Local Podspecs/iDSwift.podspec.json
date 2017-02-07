@@ -2,7 +2,7 @@
   "name": "iDSwift",
   "version": "0.0.1",
   "summary": "A Swift way of using OpenStreetMap iD editor presets.",
-  "description": "                   A Swift way of using OpenStreetMap iD editor presets.\n\n",
+  "description": "A Swift way of using OpenStreetMap iD editor presets.",
   "homepage": "https://github.com/davidchiles/iDSwift.git",
   "license": "CC0",
   "authors": {

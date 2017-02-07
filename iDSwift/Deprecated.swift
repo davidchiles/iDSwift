@@ -8,10 +8,10 @@
 
 import Foundation
 
-public class DeprecatedTag {
+open class DeprecatedTag {
     
-    public var oldTags:[String:String]
-    public var newTags:[String:String]
+    open var oldTags:[String:String]
+    open var newTags:[String:String]
     
     init(oldTags:[String:String], newTags:[String:String]) {
         self.oldTags = oldTags
