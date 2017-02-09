@@ -13,6 +13,7 @@
 		6346F41A1B0FF31F008DD617 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 6346F4191B0FF31F008DD617 /* Images.xcassets */; };
 		6346F41D1B0FF31F008DD617 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6346F41B1B0FF31F008DD617 /* LaunchScreen.xib */; };
 		6346F4291B0FF31F008DD617 /* ExampleTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6346F4281B0FF31F008DD617 /* ExampleTests.swift */; };
+		63A156B31E4D31F5006D51E6 /* PresetTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63A156B21E4D31F5006D51E6 /* PresetTests.swift */; };
 		8CD00D4C52B9DF3F25838BFF /* Pods_ExampleTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 42D63465082699771F823C5A /* Pods_ExampleTests.framework */; };
 /* End PBXBuildFile section */
 
@@ -39,6 +40,7 @@
 		6346F4221B0FF31F008DD617 /* ExampleTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ExampleTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		6346F4271B0FF31F008DD617 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		6346F4281B0FF31F008DD617 /* ExampleTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExampleTests.swift; sourceTree = "<group>"; };
+		63A156B21E4D31F5006D51E6 /* PresetTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PresetTests.swift; sourceTree = "<group>"; };
 		7C420F028E6693B810B35290 /* Pods-ExampleTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ExampleTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-ExampleTests/Pods-ExampleTests.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -115,6 +117,7 @@
 			isa = PBXGroup;
 			children = (
 				6346F4281B0FF31F008DD617 /* ExampleTests.swift */,
+				63A156B21E4D31F5006D51E6 /* PresetTests.swift */,
 				6346F4261B0FF31F008DD617 /* Supporting Files */,
 			);
 			path = ExampleTests;
@@ -298,6 +301,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				63A156B31E4D31F5006D51E6 /* PresetTests.swift in Sources */,
 				6346F4291B0FF31F008DD617 /* ExampleTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
