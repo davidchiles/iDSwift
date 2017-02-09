@@ -48,6 +48,8 @@ public enum FieldType: String, CustomStringConvertible {
     }
 }
 
+
+
 public class Preset {
     
     public let geometry:[GeometryType]
@@ -110,6 +112,40 @@ public class Preset {
         if let terms = presetJSONDictionary["terms"] as? [String] {
             self.terms = terms;
         }
+    }
+}
+
+public enum PresetScore: Equatable {
+    case Score(Double)
+    case NoScore
+    
+    public static func ==(lhs: PresetScore, rhs: PresetScore) -> Bool {
+        switch (lhs, rhs) {
+        case (.NoScore, .NoScore):
+            return true
+        case (let .Score(score1), let .Score(score2)):
+            return score1 == score2
+        default:
+            return false
+        }
+    }
+}
+
+public extension Preset {
+    
+    
+    public class func matchScore(presetTags:TagDictionary,tags:TagDictionary,matchScore:Double = 1) -> PresetScore {
+        var score:Double = 0
+        for (key, value) in presetTags {
+            if (value == tags[key]) {
+                score += matchScore
+            } else if (value == "*" && tags[key] != nil) {
+                score += matchScore / 2.0
+            } else {
+                return .NoScore
+            }
+        }
+        return .Score(score)
     }
 }
 
